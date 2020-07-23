@@ -33,10 +33,10 @@
         "use strict";
         //Sandcastle_Begin
         var viewer = new Cesium.Viewer("cesiumContainer", {
-          infoBox: false,
-          selectionIndicator: false,
-          shadows: true,
-          shouldAnimate: true,
+          infoBox: false, // 是否显示点击之后的box
+          selectionIndicator: false, // 是否显示选中的框框
+          shadows: true, // 确定阴影是否由太阳投射
+          shouldAnimate: true, //如果默认情况下时钟应尝试延长仿真时间，则为 true ，否则为 false 。此选项优先于设置 Viewer＃clockViewModel 。
         });
 
         function createModel(url, height) {
@@ -66,7 +66,7 @@
               maximumScale: 20000,
             },
           });
-          viewer.trackedEntity = entity;
+          viewer.trackedEntity = entity; // 获取或设置相机当前正在跟踪的Entity实例
         }
 
         var options = [

@@ -71,7 +71,7 @@
         var viewer = new Cesium.Viewer("cesiumContainer", {
           infoBox: false,
           selectionIndicator: false,
-          terrainProvider: Cesium.createWorldTerrain(),
+          terrainProvider: Cesium.createWorldTerrain(), // 地形
         });
         var scene = viewer.scene;
 
@@ -92,6 +92,7 @@
         var downHandler = new Cesium.ScreenSpaceEventHandler(
           viewer.scene.canvas
         );
+        // 鼠标左键点击事件
         downHandler.setInputAction(function (movement) {
           var pickedObject = scene.pick(movement.position);
           if (
@@ -108,6 +109,7 @@
 
         // Release plane on mouse up
         var upHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+        // 鼠标左键松开事件
         upHandler.setInputAction(function () {
           if (Cesium.defined(selectedPlane)) {
             selectedPlane.material = Cesium.Color.WHITE.withAlpha(0.1);
@@ -122,6 +124,7 @@
         var moveHandler = new Cesium.ScreenSpaceEventHandler(
           viewer.scene.canvas
         );
+        // 鼠标移动事件
         moveHandler.setInputAction(function (movement) {
           if (Cesium.defined(selectedPlane)) {
             var deltaY = movement.startPosition.y - movement.endPosition.y;
@@ -141,20 +144,21 @@
           clippingPlanes = new Cesium.ClippingPlaneCollection({
             planes: [
               new Cesium.ClippingPlane(
-                new Cesium.Cartesian3(0.0, 0.0, -1.0),
+                new Cesium.Cartesian3(0.0, 0.0, -1.0), // 飞机的法线
                 0.0
               ),
             ],
-            edgeWidth: viewModel.edgeStylingEnabled ? 1.0 : 0.0,
+            edgeWidth: viewModel.edgeStylingEnabled ? 1.0 : 0.0, // 应用于被裁剪对象的边缘的高亮部分的宽度(以像素为单位)。
           });
 
           tileset = viewer.scene.primitives.add(
             new Cesium.Cesium3DTileset({
               url: url,
-              clippingPlanes: clippingPlanes,
+              clippingPlanes: clippingPlanes, // 裁剪
             })
           );
 
+          // 显示模型的范围边框
           tileset.debugShowBoundingVolume =
             viewModel.debugBoundingVolumesEnabled;
           return tileset.readyPromise
@@ -167,6 +171,7 @@
                 new Cesium.HeadingPitchRange(0.5, -0.2, radius * 4.0)
               );
 
+              // 如果模型有位置变动，则相应的处理裁剪位置变动
               if (
                 !Cesium.Matrix4.equals(
                   tileset.root.transform,

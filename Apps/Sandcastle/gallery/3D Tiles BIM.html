@@ -39,6 +39,7 @@
         var viewer = new Cesium.Viewer("cesiumContainer");
         var scene = viewer.scene;
 
+        // 创建3dtileset模型
         var tileset = scene.primitives.add(
           new Cesium.Cesium3DTileset({
             url: Cesium.IonResource.fromAssetId(8564),
@@ -60,10 +61,10 @@
             console.log(error);
           });
 
-        tileset.colorBlendMode = Cesium.Cesium3DTileColorBlendMode.REPLACE;
+        tileset.colorBlendMode = Cesium.Cesium3DTileColorBlendMode.REPLACE; // 将源颜色替换为特征颜色。
 
-        var selectedFeature;
-        var picking = false;
+        var selectedFeature; // 当前选中的Feature
+        var picking = false; // 是否支持选中
 
         Sandcastle.addToggleButton("Per-feature selection", false, function (
           checked
@@ -91,18 +92,21 @@
           }
         }
 
-        var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+        var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas); // Cesium事件
+        // 绑定鼠标移动事件
         handler.setInputAction(function (movement) {
           if (!picking) {
+            // 如果不能拾取则返回
             return;
           }
 
-          var feature = scene.pick(movement.endPosition);
+          var feature = scene.pick(movement.endPosition); // 获取鼠标在哪个feature上面
 
-          unselectFeature(selectedFeature);
+          unselectFeature(selectedFeature); // 先去除之前的选中
 
           if (feature instanceof Cesium.Cesium3DTileFeature) {
-            selectFeature(feature);
+            // 如果feature类型是3dtileFeature
+            selectFeature(feature); // 选择feature
           }
         }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
@@ -151,6 +155,11 @@
           return parseInt(feature.getProperty("element"), 10);
         }
 
+        /**
+         * 设置element的颜色
+         * @param element
+         * @param color
+         */
         function setElementColor(element, color) {
           var featuresToColor = elementMap[element];
           var length = featuresToColor.length;
@@ -170,6 +179,11 @@
           }
         }
 
+        /**
+         * 加载feature到elementMap对象中
+         * hiddenElements存在的则隐藏
+         * @param feature
+         */
         function loadFeature(feature) {
           var element = getElement(feature);
           var features = elementMap[element];
@@ -205,10 +219,12 @@
           }
         }
 
+        // 3DTileset加载完成
         tileset.tileLoad.addEventListener(function (tile) {
           processTileFeatures(tile, loadFeature);
         });
 
+        // 3DTileset卸载完成
         tileset.tileUnload.addEventListener(function (tile) {
           processTileFeatures(tile, unloadFeature);
         });
