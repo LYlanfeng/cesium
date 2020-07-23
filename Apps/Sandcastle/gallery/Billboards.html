@@ -96,7 +96,7 @@
             position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
             billboard: {
               image: "../images/Cesium_Logo_overlay.png",
-              sizeInMeters: true,
+              sizeInMeters: true, // 是否以米为单位，默认值为false
             },
           });
 
@@ -136,7 +136,7 @@
             position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
             billboard: {
               image: "../images/facility.gif",
-              scaleByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5),
+              scaleByDistance: new Cesium.NearFarScalar(1.5e2, 2.0, 1.5e7, 0.5), // 镜头远近 放大参数
             },
           });
         }
@@ -153,7 +153,7 @@
                 2.0,
                 1.5e7,
                 0.5
-              ),
+              ), // 镜头远景，透明度大小
             },
           });
         }
@@ -185,7 +185,7 @@
                   image: images[0],
                   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
                   verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                  pixelOffset: new Cesium.Cartesian2(0.0, -facilityHeight),
+                  pixelOffset: new Cesium.Cartesian2(0.0, -facilityHeight), // 调整offset
                   pixelOffsetScaleByDistance: new Cesium.NearFarScalar(
                     1.0e3,
                     1.0,
@@ -212,7 +212,7 @@
             position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
             billboard: {
               image: "../images/whiteShapes.png",
-              imageSubRegion: new Cesium.BoundingRectangle(49, 43, 18, 18),
+              imageSubRegion: new Cesium.BoundingRectangle(49, 43, 18, 18), // 雪碧图使用
               color: Cesium.Color.LIME,
             },
           });

@@ -100,6 +100,8 @@
               onselect: function () {
                 var e = viewer.entities.add({
                   corridor: {
+                    // 描述走廊
+                    // 一个属性，它指定定义走廊中心线的 Cartesian3 位置的数组
                     positions: Cesium.Cartesian3.fromDegreesArray([
                       -122.19,
                       46.1914,
@@ -108,6 +110,7 @@
                       -122.23,
                       46.21,
                     ]),
+                    // 用于指定道路边缘之间的距离
                     width: 2000.0,
                     material: Cesium.Color.GREEN.withAlpha(0.5),
                   },

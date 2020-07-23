@@ -66,6 +66,7 @@
         viewer.scene.primitives.add(tileset);
 
         // Color buildings based on their height.
+        // 根绝楼层高度渲染不同颜色
         function colorByHeight() {
           tileset.style = new Cesium.Cesium3DTileStyle({
             color: {

@@ -39,6 +39,7 @@
           terrainProvider: Cesium.createWorldTerrain(),
         });
 
+        // 如果应对广告牌，折线，标签等图元进行深度测试，则为真相对于地形表面；如果应始终在顶部绘制此类图元，则为false除非它们位于地球的另一侧。深度的缺点针对图元测试图元是轻微的数字噪声或图面细节水平切换有时会使应该在表面上的图元消失在其下方。
         viewer.scene.globe.depthTestAgainstTerrain = true;
 
         // Set the initial camera view to look at Manhattan
@@ -86,10 +87,12 @@
         var selectedEntity = new Cesium.Entity();
 
         // Get default left click handler for when a feature is not picked on left click
+        // 获取左键点击
         var clickHandler = viewer.screenSpaceEventHandler.getInputAction(
           Cesium.ScreenSpaceEventType.LEFT_CLICK
         );
 
+        // 是否支持剪影舞台
         // If silhouettes are supported, silhouette features in blue on mouse over and silhouette green on mouse click.
         // If silhouettes are not supported, change the feature color to yellow on mouse over and green on mouse click.
         if (
@@ -114,6 +117,7 @@
           );
 
           // Silhouette a feature blue on hover.
+          // 鼠标移动事件
           viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(
             movement
           ) {
@@ -143,6 +147,7 @@
           Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
           // Silhouette a feature on selection and show metadata in the InfoBox.
+          // 鼠标左键点击事件
           viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(
             movement
           ) {
